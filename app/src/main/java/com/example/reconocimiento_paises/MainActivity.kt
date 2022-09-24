@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
       // var str="{\"requests\":[{\"image\":{\"content\":\"imagen\"},\"features\":[{\"maxResults\":10,\"type\":\"WEB_DETECTION\"},]}]}"
 
 
-       var str="{\"requests\":[{\"image\":{\"source\":\"$base64Encoded\"},\"features\":[{\"maxResults\":10,\"type\":\"LABEL_DETECTION\"},]}]}"
+       var str="{\"requests\":[{\"image\":{\"content\":\"$base64Encoded\"},\"features\":[{\"maxResults\":10,\"type\":\"LABEL_DETECTION\"},]}]}"
 
        var jsonobj= JSONObject(str)
         var item_regions=ArrayList<String>();
