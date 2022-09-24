@@ -29,46 +29,18 @@ import java.util.HashMap
 
 class MainActivity : AppCompatActivity() {
      private val selecionaract= 50
-     val token="AIzaSyB5MkIB5lNnQH1kC1tZ3ATeEsv7z66moKs"
+     val token="ya29.a0Aa4xrXOW38oFRNWavbzUoJUieGwc0bjRTdgUhyxgzjbRA2RMHLNsf-Tl10Q_sn9aGzKbmS66_GeZUuWPRKdxhTJfSZC61xgN0BZdbSO-nbSLG9WLxN-WSmlsu85ua7yf_L9uro9YA8YPNyYX_CUwhGrgcJiDHdjjD-ZNPBARoh-sFKFQae0RxnPYe1uYYT70ZPKRfY7Vwday9eKgXd0YNiyqdk2WHVSVVGrGdyT93Y9XC-WWBe3BQqizN76EnNYNqF0tyQaCgYKATASARMSFQEjDvL9osgfo39vBZMXMg4lJeBrjA0269"
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*    Glide
-            .with(this@MainActivity)
-            .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSkWLDWUQi6ZaGwyrltBJw4t2EWjxs-Z-cPQ&usqp=CAU")
-            .centerCrop()
-            .placeholder(R.drawable.subir)
-            .into(img1);
-    }*/
         var img1:ImageView=findViewById(R.id.img1)
         img1.setOnClickListener{
             ImageController.seleccionarfoto(this,selecionaract)
         }
-
-      /*  var btnsave:Button=findViewById(R.id.btnsave)
-        btnsave.setOnClickListener{
-            imageUri?.let
-            ImageController.guardarimg(this@MainActivity,10,it)
-        }*/
          enviarimg()
     }
-   /* fun encode64(image:Bitmap): String?
-    {
-        val baos=ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.PNG)
-        val b= baos.toByteArray()
-        return  Base64.encodeToString(b, Base64.DEFAULT)
-    }
-
-    fun decode64(): Bitmap?
-    {
-        val decotebyte:ByteArray= Base64.decode("aa",0)
-        return  BitmapFactory.decodeByteArray(decotebyte,0,decotebyte.size)
-    }
-
-   @RequiresApi(Build.VERSION_CODES.P)*/
 
 
    @RequiresApi(Build.VERSION_CODES.O)
@@ -87,30 +59,20 @@ class MainActivity : AppCompatActivity() {
       // var str="{\"requests\":[{\"image\":{\"content\":\"imagen\"},\"features\":[{\"maxResults\":10,\"type\":\"WEB_DETECTION\"},]}]}"
 
 
-       var str="{\"requests\":[{\"image\":{\"content\":"+base64Encoded+"\"},\"features\":[{\"maxResults\":10,\"type\":\"WEB_DETECTION\"},]}]}"
+       var str="{\"requests\":[{\"image\":{\"source\":\"$base64Encoded\"},\"features\":[{\"maxResults\":10,\"type\":\"LABEL_DETECTION\"},]}]}"
 
        var jsonobj= JSONObject(str)
         var item_regions=ArrayList<String>();
         val queue = Volley.newRequestQueue(this)
-      /*  var JsonArrayRq:()-> JsonObjectRequest =
-            {   var json = object: JsonObjectRequest(
-                POST,"https://cloud.google.com/vision/docs/detecting-web",jsonobj,
-            ) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers.put("Content-Type", "application/json")
-                    headers.put("Authorization", "Bearer "+token)
-                    return headers
-                }
-            }
-                json
-            }*/
-        var Jsonarr= object :JsonObjectRequest(POST,"https://cloud.google.com/vision/docs/detecting-web",jsonobj,
+
+        var Jsonarr= object :JsonObjectRequest(POST,"https://vision.googleapis.com/v1/images:annotate",jsonobj,
             { response->
                 val a= response
 
-            },{}) {
+            },{ error ->
+                val e=error;
+
+            }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
